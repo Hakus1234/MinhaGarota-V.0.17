@@ -1694,10 +1694,13 @@ screen escolhe_nome():
                 xsize 450
                 background "extra/campo_input.webp"
                 xalign 0.5
-                id "input_1"
-                action NullAction()
+                action Function(prompt_store_input, "pnome", "Digite seu nome", 15)
 
-                add Input(hover_color="#ec2098",size=22, color="#ec2098", changed=nome_func, length=15, button=renpy.get_widget("escolhe_nome","input_1")) yalign 1.0
+                text (pnome if pnome else "Toque para digitar"):
+                    size 22
+                    color "#ec2098"
+                    xalign 0.5
+                    yalign 0.5
 
         vbox:
 

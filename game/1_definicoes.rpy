@@ -79,10 +79,31 @@ init python:
 
     PythonSDLActivity = _PythonSDLActivityStub
 
+    import random
+    import renpy.store as store
+
     def nome_func(newstring):
         store.pnome = newstring
 
-    import random
+    def prompt_store_input(var_name, prompt, length=15, allow=None):
+        """
+        Abre um prompt de texto nativo (funciona melhor no Android) e armazena
+        o resultado na variável solicitada.
+        """
+        def _inner():
+            current_value = getattr(store, var_name, "")
+            new_value = renpy.input(prompt, default=current_value, length=length, allow=allow)
+            if new_value is None:
+                return
+
+            new_value = new_value.strip()
+            if not new_value:
+                return
+
+            setattr(store, var_name, new_value)
+
+        renpy.invoke_in_new_context(_inner)
+        renpy.restart_interaction()
 
 
 
